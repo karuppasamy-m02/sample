@@ -1251,13 +1251,13 @@ input {
   justify-content: flex-end;
 }
 
-/* 5 Candles Rack */
+/* 3 Candles Rack */
 .candles-row {
   position: absolute;
   bottom: 124px;
   left: 50%;
   transform: translateX(-50%);
-  width: 130px;
+  width: 72px;
   display: flex;
   justify-content: space-between;
   z-index: 5;
@@ -1289,10 +1289,8 @@ input {
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.candle-item.c-2 .candle-flame { animation-delay: 0.14s; }
-.candle-item.c-3 .candle-flame { animation-delay: 0.28s; }
-.candle-item.c-4 .candle-flame { animation-delay: 0.09s; }
-.candle-item.c-5 .candle-flame { animation-delay: 0.21s; }
+.candle-item.c-2 .candle-flame { animation-delay: 0.18s; }
+.candle-item.c-3 .candle-flame { animation-delay: 0.35s; }
 
 .candle-flame.extinguished {
   opacity: 0;

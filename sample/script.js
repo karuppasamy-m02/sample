@@ -657,7 +657,7 @@ function initStep6MemoryGame() {
 }
 
 /* --------------------------------------------------------------------------
-   STEP 7: 📸 MEMORY PHOTOS (3-PHOTO INTERACTIVE SLIDESHOW)
+   STEP 7: 📸 MEMORY PHOTOS (3-PHOTO INTERACTIVE & AUTO-SLIDESHOW)
    -------------------------------------------------------------------------- */
 function initStep7Photos() {
   const slides = document.querySelectorAll("#photoSliderTrack .photo-slide");
@@ -669,6 +669,7 @@ function initStep7Photos() {
 
   let currentSlide = 0;
   const totalSlides = slides.length || 3;
+  let autoSlideInterval = null;
 
   function showSlide(index) {
     if (index < 0) index = totalSlides - 1;
@@ -693,40 +694,77 @@ function initStep7Photos() {
     });
   }
 
+  function startAutoSlide() {
+    stopAutoSlide();
+    autoSlideInterval = setInterval(() => {
+      if (currentStep === 7) {
+        showSlide(currentSlide + 1);
+      }
+    }, 3500);
+  }
+
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = null;
+    }
+  }
+
+  function resetAutoSlide() {
+    stopAutoSlide();
+    startAutoSlide();
+  }
+
   if (prevBtn) {
-    prevBtn.addEventListener("click", () => showSlide(currentSlide - 1));
+    prevBtn.addEventListener("click", () => {
+      showSlide(currentSlide - 1);
+      resetAutoSlide();
+    });
   }
 
   if (nextBtn) {
-    nextBtn.addEventListener("click", () => showSlide(currentSlide + 1));
+    nextBtn.addEventListener("click", () => {
+      showSlide(currentSlide + 1);
+      resetAutoSlide();
+    });
   }
 
   dots.forEach((d) => {
     d.addEventListener("click", () => {
       const idx = parseInt(d.dataset.index, 10);
-      if (!isNaN(idx)) showSlide(idx);
+      if (!isNaN(idx)) {
+        showSlide(idx);
+        resetAutoSlide();
+      }
     });
   });
 
-  // Mobile Touch Swipe
+  // Mobile Touch Swipe & Auto-Slide Pause/Resume
   if (container) {
     let touchStartX = 0;
     let touchEndX = 0;
 
     container.addEventListener("touchstart", (e) => {
+      stopAutoSlide();
       touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
 
     container.addEventListener("touchend", (e) => {
       touchEndX = e.changedTouches[0].screenX;
       if (touchEndX < touchStartX - 40) {
-        showSlide(currentSlide + 1); // Swipe left -> next
+        showSlide(currentSlide + 1);
+      } else if (touchEndX > touchStartX + 40) {
+        showSlide(currentSlide - 1);
       }
-      if (touchEndX > touchStartX + 40) {
-        showSlide(currentSlide - 1); // Swipe right -> prev
-      }
+      startAutoSlide();
     }, { passive: true });
+
+    container.addEventListener("mouseenter", stopAutoSlide);
+    container.addEventListener("mouseleave", startAutoSlide);
   }
+
+  // Start auto slideshow
+  startAutoSlide();
 
   if (step7Btn) step7Btn.addEventListener("click", nextStep);
 }

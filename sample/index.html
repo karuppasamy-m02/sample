@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="A special, premium 9-step birthday surprise experience.">
+  <title>A Special Surprise ✨</title>
+
+  <!-- Google Fonts for Luxury, Emotional & Clean Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Soft Pastel Background Blobs & Floating Hearts -->
+  <div class="ambient-bg-blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="floating-hearts-bg" id="floatingHeartsBg" aria-hidden="true"></div>
+
+  <!-- Step Progress Header Bar -->
+  <header class="step-progress-header" id="stepProgressHeader">
+    <div class="progress-info-pill">
+      <span class="step-number" id="stepNumberText">STEP 1 OF 9</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFillBar" style="width: 11.1%;"></div>
+    </div>
+  </header>
+
+  <!-- Main 9-Step Interactive Container -->
+  <main class="steps-container" id="stepsContainer">
+
+    <!-- =======================================================================
+         STEP 1: 🔐 PASSWORD ENTRY
+         ======================================================================= -->
+    <section class="step active" data-step="1" id="step-1" aria-label="Password Unlock">
+      <div class="step-card text-center" id="passwordCard">
+        <div class="card-icon-bubble">
+          <span class="lock-icon" id="lockIcon">🔐</span>
+        </div>
+        <h1 class="step-heading">A Little Surprise</h1>
+        <p class="step-subheading">Something special is waiting for you.</p>
+
+        <form id="passwordForm" class="step-form" onsubmit="return false;">
+          <div class="input-wrap">
+            <input type="password" id="passwordInput" class="pink-input" placeholder="Enter Password" autocomplete="off" required>
+          </div>
+          <button type="submit" id="unlockBtn" class="btn-action pink-btn">
+            <span>UNLOCK SURPRISE ✨</span>
+          </button>
+          <p id="passwordErrorMsg" class="feedback-msg error-msg hidden">Oops! Try again 😄</p>
+          <p id="passwordSuccessMsg" class="feedback-msg success-msg hidden">✓ UNLOCKED</p>
+        </form>
+
+        <div id="step1NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step1NextBtn">
+            <span>CONTINUE →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 2: 🎁 OPEN SURPRISE + MUSIC
+         ======================================================================= -->
+    <section class="step" data-step="2" id="step-2" aria-label="Open Surprise">
+      <div class="step-card text-center">
+        <div class="badge-tag">
+          <span>✨ SPECIAL GIFT</span>
+        </div>
+        <h1 class="step-heading">A Little Surprise</h1>
+        <p class="step-subheading">Today is all about you.</p>
+
+        <!-- Animated 3D Gift Box -->
+        <div class="gift-box-area" id="giftBoxTrigger" role="button" tabindex="0" aria-label="Tap to open gift box">
+          <div class="gift-box-3d">
+            <div class="gift-lid-3d">
+              <div class="gift-bow"><span></span><span></span></div>
+              <div class="lid-ribbon"></div>
+            </div>
+            <div class="gift-base-3d">
+              <div class="base-ribbon-v"></div>
+              <div class="base-ribbon-h"></div>
+            </div>
+          </div>
+          <span class="gift-hint-text">Tap the gift box 🎁</span>
+        </div>
+
+        <div id="giftInitialBtnWrap">
+          <button id="openGiftBtn" class="btn-action pink-btn glow-btn">
+            <span>OPEN SURPRISE 🎁</span>
+          </button>
+        </div>
+
+        <div id="giftOpenedWrap" class="opened-notice hidden">
+          <p class="notice-txt">Your surprise has started ✨</p>
+          <div class="step-footer-actions">
+            <button class="next-btn pink-btn glow-btn" id="step2NextBtn">
+              <span>CONTINUE →</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 3: ❤️ CATCH THE HEARTS GAME
+         ======================================================================= -->
+    <section class="step" data-step="3" id="step-3" aria-label="Catch the Hearts Game">
+      <div class="step-card text-center">
+        <div class="badge-tag">
+          <span>🎮 MINI GAME #1</span>
+        </div>
+        <h1 class="step-heading">Catch The Hearts ❤️</h1>
+        <p class="step-subheading">Catch <strong>10 hearts</strong> before 20s runs out!</p>
+
+        <div class="game-score-row">
+          <div class="score-pill">Score: <strong id="heartScoreVal">0</strong> / 10</div>
+          <div class="score-pill">Time: <strong id="heartTimerVal">20</strong>s</div>
+        </div>
+
+        <!-- Heart Arena -->
+        <div class="heart-arena" id="heartGameArena">
+          <div id="heartStartOverlay" class="arena-overlay">
+            <button id="startHeartBtn" class="btn-action pink-btn">
+              <span>START GAME ❤️</span>
+            </button>
+          </div>
+          
+          <div id="heartResultOverlay" class="arena-overlay hidden">
+            <h3 id="heartResultHeader" class="result-title">YOU DID IT! 🎉</h3>
+            <p id="heartResultDesc" class="result-desc">You caught all 10 hearts!</p>
+            <button id="heartRetryBtn" class="btn-action secondary-btn hidden">
+              <span>TRY AGAIN 🔄</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="step3NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step3NextBtn">
+            <span>CONTINUE →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 4: 🃏 SCRATCH CARD
+         ======================================================================= -->
+    <section class="step" data-step="4" id="step-4" aria-label="Scratch Card">
+      <div class="step-card text-center">
+        <div class="badge-tag">
+          <span>🃏 MINI GAME #2</span>
+        </div>
+        <h1 class="step-heading">Scratch To Reveal ✨</h1>
+        <p class="step-subheading">Rub with your finger or mouse over the card!</p>
+
+        <div class="scratch-card-box">
+          <div class="scratch-underlay" id="scratchUnderlay">
+            <span class="scratch-emoji">🎁</span>
+            <h3 class="scratch-reveal-title">🎉 REVEALED!</h3>
+            <p class="scratch-reveal-body">
+              Keep smiling. Keep shining.<br>
+              And keep making beautiful memories.
+            </p>
+            <p class="scratch-oath">Always With You. 🤍</p>
+          </div>
+
+          <canvas id="scratchCanvas" width="300" height="200"></canvas>
+        </div>
+
+        <p id="scratchPctLabel" class="status-note">Scratched: 0%</p>
+
+        <div id="step4NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step4NextBtn">
+            <span>CONTINUE →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 5: 🧩 MEMORY MATCH GAME
+         ======================================================================= -->
+    <section class="step" data-step="5" id="step-5" aria-label="Memory Match Game">
+      <div class="step-card text-center">
+        <div class="badge-tag">
+          <span>🧩 MINI GAME #3</span>
+        </div>
+        <h1 class="step-heading">Memory Match Challenge</h1>
+        <p class="step-subheading">Match all 3 pairs of cards to unlock memories!</p>
+
+        <div class="memory-grid" id="memoryCardsGrid">
+          <!-- 6 Cards injected dynamically -->
+        </div>
+
+        <p id="memoryMovesLabel" class="status-note">Moves: 0</p>
+        <p id="memorySuccessMsg" class="feedback-msg success-msg hidden">PERFECT! ✨</p>
+
+        <div id="step5NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step5NextBtn">
+            <span>CONTINUE →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 6: 📸 MEMORY PHOTOS (EXACTLY 3 PHOTOS)
+         ======================================================================= -->
+    <section class="step" data-step="6" id="step-6" aria-label="Memory Photos">
+      <div class="step-card text-center photos-step-card">
+        <div class="badge-tag">
+          <span>📸 PRECIOUS MEMORIES</span>
+        </div>
+        <h1 class="step-heading">Little Moments</h1>
+        <p class="step-subheading">Some memories are forever worth keeping.</p>
+
+        <!-- 3 Photos Gallery: Mobile swipe/carousel & Desktop 3-cards row -->
+        <div class="gallery-wrapper" id="photosGallery">
+          
+          <div class="photo-item-card">
+            <div class="photo-frame">
+              <img id="galleryPhoto1" src="assets/photo1.jpg" alt="Memory Photo 1" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo1.png';">
+            </div>
+            <p class="photo-tagline">Some moments are worth keeping. ✨</p>
+          </div>
+
+          <div class="photo-item-card">
+            <div class="photo-frame">
+              <img id="galleryPhoto2" src="assets/photo2.jpg" alt="Memory Photo 2" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo2.png';">
+            </div>
+            <p class="photo-tagline">Random moments become favorites. 🌸</p>
+          </div>
+
+          <div class="photo-item-card">
+            <div class="photo-frame">
+              <img id="galleryPhoto3" src="assets/photo3.jpg" alt="Memory Photo 3" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo3.png';">
+            </div>
+            <p class="photo-tagline">One more memory to keep. 🤍</p>
+          </div>
+
+        </div>
+
+        <div class="step-footer-actions">
+          <button class="next-btn pink-btn glow-btn" id="step6NextBtn">
+            <span>CONTINUE →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 7: 💌 SECRET LETTER
+         ======================================================================= -->
+    <section class="step" data-step="7" id="step-7" aria-label="Secret Letter">
+      <div class="step-card text-center">
+        <div class="badge-tag">
+          <span>💌 SPECIAL NOTE</span>
+        </div>
+        <h1 class="step-heading">A Letter For You</h1>
+        <p class="step-subheading">A handwritten note from your best friend.</p>
+
+        <div class="envelope-3d-wrap" id="letterEnvelopeWrap">
+          <div class="env-back"></div>
+
+          <!-- Letter Card -->
+          <div class="env-sheet" id="envSheetCard">
+            <div class="env-sheet-inner">
+              <p class="sheet-greet">Hey <span id="letterRecipientName">Swathi</span>,</p>
+              <p class="sheet-p">Birthdays come every year, but some people make certain years a little more memorable.</p>
+              <p class="sheet-p">Thank you for all the laughs, random conversations, silly moments, and memories.</p>
+              <p class="sheet-p">I hope this new chapter brings you happiness, success, peaceful moments, and countless reasons to smile.</p>
+              
+              <div class="sheet-quote">
+                Keep dreaming.<br>
+                Keep smiling.<br>
+                Keep shining.
+              </div>
+
+              <p class="sheet-oath">
+                And wherever life takes us,<br>
+                <strong>ALWAYS WITH YOU. 🤍</strong>
+              </p>
+
+              <p class="sheet-sign" id="letterSignName">— Your Best Friend</p>
+            </div>
+          </div>
+
+          <div class="env-front">
+            <div class="env-t-left"></div>
+            <div class="env-t-right"></div>
+            <div class="env-t-bottom"></div>
+            <div class="env-t-flap" id="envTopFlap">
+              <div class="env-seal">🤍</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="letterInitialBtnWrap">
+          <button id="openLetterBtn" class="btn-action pink-btn">
+            <span>OPEN LETTER 💌</span>
+          </button>
+        </div>
+
+        <div id="step7NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step7NextBtn">
+            <span>CONTINUE →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 8: 🎂 CAKE CUTTING
+         ======================================================================= -->
+    <section class="step" data-step="8" id="step-8" aria-label="Cake Cutting">
+      <div class="step-card text-center cake-card">
+        <div class="badge-tag">
+          <span>🎂 CELEBRATION</span>
+        </div>
+        <h1 class="step-heading" id="cakeStepHeading">Make A Wish ✨</h1>
+        <p class="step-subheading" id="cakeStepSubheading">Close your eyes and make a wish!</p>
+
+        <!-- 3-Tier Illustrated Cake with 5 Candles & Knife -->
+        <div class="cake-arena" id="cakeInteractiveArena">
+          
+          <!-- Cake Knife -->
+          <div class="cake-knife" id="cakeKnifeElem">
+            <div class="knife-blade"></div>
+            <div class="knife-handle"></div>
+          </div>
+
+          <!-- 3-Tier Luxury Cake -->
+          <div class="cake-structure">
+            
+            <!-- 5 Candles -->
+            <div class="candles-row" id="candlesRow">
+              <div class="candle-item c-1"><div class="candle-flame"></div><div class="smoke-fx"></div><div class="candle-stem"></div></div>
+              <div class="candle-item c-2"><div class="candle-flame"></div><div class="smoke-fx"></div><div class="candle-stem"></div></div>
+              <div class="candle-item c-3"><div class="candle-flame"></div><div class="smoke-fx"></div><div class="candle-stem"></div></div>
+              <div class="candle-item c-4"><div class="candle-flame"></div><div class="smoke-fx"></div><div class="candle-stem"></div></div>
+              <div class="candle-item c-5"><div class="candle-flame"></div><div class="smoke-fx"></div><div class="candle-stem"></div></div>
+            </div>
+
+            <!-- Tier 1 Top -->
+            <div class="tier-1-top">
+              <div class="frosting-beads"><span></span><span></span><span></span><span></span></div>
+            </div>
+
+            <!-- Tier 2 Middle -->
+            <div class="tier-2-mid">
+              <div class="rose-blooms"><span>🌸</span><span>🌸</span><span>🌸</span></div>
+            </div>
+
+            <!-- Tier 3 Bottom -->
+            <div class="tier-3-bot" id="cakeBottomTier">
+              <div class="cut-indicator" id="cakeCutLine"></div>
+              <div class="front-slice" id="cakeFrontSlice">
+                <div class="slice-cream"></div>
+              </div>
+            </div>
+
+            <!-- Hidden Message Revealed inside slice -->
+            <div class="cake-hidden-note" id="cakeHiddenNote">
+              <p>Here's to another year full of smiles, happiness and memories. 🤍</p>
+            </div>
+
+            <!-- Stand Base -->
+            <div class="cake-stand-base"></div>
+          </div>
+        </div>
+
+        <!-- Step 8 Action Flow -->
+        <div class="cake-buttons-flow">
+          <button id="btnMakeWish" class="btn-action pink-btn glow-btn">
+            <span>MAKE A WISH ✨</span>
+          </button>
+          
+          <button id="btnBlowCandles" class="btn-action pink-btn hidden">
+            <span>BLOW THE CANDLES 🕯️</span>
+          </button>
+
+          <button id="btnCutCake" class="btn-action pink-btn glow-btn hidden">
+            <span>CUT THE CAKE 🎂</span>
+          </button>
+        </div>
+
+        <p id="cakeStatusText" class="status-note"></p>
+
+        <div id="step8NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step8NextBtn">
+            <span>CONTINUE →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 9: 🎉 FINAL BIRTHDAY CELEBRATION
+         ======================================================================= -->
+    <section class="step" data-step="9" id="step-9" aria-label="Final Celebration">
+      <div class="step-card text-center finale-card">
+        
+        <div class="tribute-lines">
+          <p class="t-line t-1">SOME PEOPLE MAKE MEMORIES.</p>
+          <p class="t-line t-2">SOME PEOPLE BECOME MEMORIES.</p>
+          <p class="t-line t-3">AND SOME PEOPLE...</p>
+          <p class="t-line t-4 highlight-p">MAKE LIFE A LITTLE MORE SPECIAL.</p>
+        </div>
+
+        <div class="tribute-star-sep">🌸 ✨ 🌸</div>
+
+        <h1 class="grand-birthday-title" id="finalBirthdayHeader">
+          HAPPY BIRTHDAY, SWATHI 🎂✨
+        </h1>
+
+        <p class="final-wishes-text">
+          Here's to another year of laughter, happiness, beautiful moments, and unforgettable memories.
+        </p>
+
+        <div class="oath-card-block">
+          <h2 class="always-with-you-text">ALWAYS WITH YOU 🤍</h2>
+          <p class="friend-signature-line" id="finalFriendSig">— Your Best Friend</p>
+        </div>
+
+        <div class="step-footer-actions">
+          <button id="enjoyMomentBtn" class="btn-action pink-btn glow-btn">
+            <span>ENJOY THE MOMENT ✨</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =======================================================================
+       FLOATING CIRCULAR MUSIC BUTTON (FAB) — 56px x 56px
+       ======================================================================= -->
+  <button class="music-fab" id="musicFabBtn" aria-label="Play or Pause Birthday Music">
+    <span class="music-fab-icon" id="musicFabIcon">🎵</span>
+  </button>
+
+  <!-- Native HTML5 Audio Element -->
+  <audio id="nativeAudio" preload="auto" playsinline webkit-playsinline></audio>
+
+  <!-- Lightweight Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Core Script with 9-Step Navigation Engine -->
+  <script src="script.js"></script>
+</body>
+</html>

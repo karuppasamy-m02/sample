@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="description" content="A special, premium 9-step birthday surprise experience.">
+  <meta name="description" content="A special, premium birthday surprise experience created with love and care.">
   <title>A Special Surprise ✨</title>
 
   <!-- Google Fonts for Luxury, Emotional & Clean Typography -->
@@ -27,14 +27,14 @@
   <!-- Step Progress Header Bar -->
   <header class="step-progress-header" id="stepProgressHeader">
     <div class="progress-info-pill">
-      <span class="step-number" id="stepNumberText">STEP 1 OF 9</span>
+      <span class="step-number" id="stepNumberText">STEP 1 OF 10</span>
     </div>
     <div class="progress-track">
-      <div class="progress-fill" id="progressFillBar" style="width: 11.1%;"></div>
+      <div class="progress-fill" id="progressFillBar" style="width: 10%;"></div>
     </div>
   </header>
 
-  <!-- Main 9-Step Interactive Container -->
+  <!-- Main 10-Step Interactive Container -->
   <main class="steps-container" id="stepsContainer">
 
     <!-- =======================================================================
@@ -68,7 +68,7 @@
     </section>
 
     <!-- =======================================================================
-         STEP 2: 🎁 OPEN SURPRISE + MUSIC
+         STEP 2: 🎁 OPEN SURPRISE
          ======================================================================= -->
     <section class="step" data-step="2" id="step-2" aria-label="Open Surprise">
       <div class="step-card text-center">
@@ -111,9 +111,59 @@
     </section>
 
     <!-- =======================================================================
-         STEP 3: ❤️ CATCH THE HEARTS GAME
+         STEP 3: 🎵 DEDICATED MUSIC STEP
          ======================================================================= -->
-    <section class="step" data-step="3" id="step-3" aria-label="Catch the Hearts Game">
+    <section class="step" data-step="3" id="step-3" aria-label="Music Soundtrack">
+      <div class="step-card text-center music-step-card">
+        <div class="badge-tag">
+          <span>🎧 SOUNDTRACK</span>
+        </div>
+        <h1 class="step-heading">A Song For This Moment 🎧</h1>
+        <p class="step-subheading">Dedicated specially to you.</p>
+
+        <div class="music-disc-wrap" id="musicDiscWrap">
+          <img id="musicCoverArt" src="assets/photo2.jpg" alt="Song Cover Art - Photo 2" class="music-disc-img" onerror="this.onerror=null; this.src='assets/photo2.png';">
+          <div class="disc-glow-ring"></div>
+        </div>
+
+        <div class="music-meta-info">
+          <h3 class="track-title-text" id="musicTrackTitle">Oorum Blood Unplugged</h3>
+          <p class="track-artist-text" id="musicTrackArtist">Sai Abhyankkar & Paal Dabba</p>
+        </div>
+
+        <!-- Animated Waveform -->
+        <div class="waveform-box" id="waveformAnim">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Track Progress -->
+        <div class="progress-bar-row">
+          <span id="musicCurrentTime" class="time-label">0:00</span>
+          <div class="music-rail" id="musicProgressBar">
+            <div class="music-rail-fill" id="musicProgressFill"></div>
+          </div>
+          <span id="musicTotalTime" class="time-label">1:20</span>
+        </div>
+
+        <div class="music-step-actions">
+          <button id="playSongMainBtn" class="btn-action pink-btn glow-btn">
+            <span id="playSongBtnText">▶ PLAY THE SONG</span>
+          </button>
+          
+          <div id="musicContinueWrap" class="step-footer-actions">
+            <button class="next-btn pink-btn glow-btn" id="step3NextBtn">
+              <span>CONTINUE →</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STEP 4: ❤️ CATCH THE HEARTS GAME
+         ======================================================================= -->
+    <section class="step" data-step="4" id="step-4" aria-label="Catch the Hearts Game">
       <div class="step-card text-center">
         <div class="badge-tag">
           <span>🎮 MINI GAME #1</span>
@@ -143,8 +193,8 @@
           </div>
         </div>
 
-        <div id="step3NextWrap" class="step-footer-actions hidden">
-          <button class="next-btn pink-btn glow-btn" id="step3NextBtn">
+        <div id="step4NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step4NextBtn">
             <span>CONTINUE →</span>
           </button>
         </div>
@@ -152,9 +202,9 @@
     </section>
 
     <!-- =======================================================================
-         STEP 4: 🃏 SCRATCH CARD
+         STEP 5: 🃏 SCRATCH CARD
          ======================================================================= -->
-    <section class="step" data-step="4" id="step-4" aria-label="Scratch Card">
+    <section class="step" data-step="5" id="step-5" aria-label="Scratch Card">
       <div class="step-card text-center">
         <div class="badge-tag">
           <span>🃏 MINI GAME #2</span>
@@ -178,8 +228,8 @@
 
         <p id="scratchPctLabel" class="status-note">Scratched: 0%</p>
 
-        <div id="step4NextWrap" class="step-footer-actions hidden">
-          <button class="next-btn pink-btn glow-btn" id="step4NextBtn">
+        <div id="step5NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step5NextBtn">
             <span>CONTINUE →</span>
           </button>
         </div>
@@ -187,9 +237,9 @@
     </section>
 
     <!-- =======================================================================
-         STEP 5: 🧩 MEMORY MATCH GAME
+         STEP 6: 🧩 MEMORY MATCH GAME
          ======================================================================= -->
-    <section class="step" data-step="5" id="step-5" aria-label="Memory Match Game">
+    <section class="step" data-step="6" id="step-6" aria-label="Memory Match Game">
       <div class="step-card text-center">
         <div class="badge-tag">
           <span>🧩 MINI GAME #3</span>
@@ -204,8 +254,8 @@
         <p id="memoryMovesLabel" class="status-note">Moves: 0</p>
         <p id="memorySuccessMsg" class="feedback-msg success-msg hidden">PERFECT! ✨</p>
 
-        <div id="step5NextWrap" class="step-footer-actions hidden">
-          <button class="next-btn pink-btn glow-btn" id="step5NextBtn">
+        <div id="step6NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step6NextBtn">
             <span>CONTINUE →</span>
           </button>
         </div>
@@ -213,9 +263,9 @@
     </section>
 
     <!-- =======================================================================
-         STEP 6: 📸 MEMORY PHOTOS (EXACTLY 3 PHOTOS)
+         STEP 7: 📸 MEMORY PHOTOS (EXACTLY 3 PHOTOS)
          ======================================================================= -->
-    <section class="step" data-step="6" id="step-6" aria-label="Memory Photos">
+    <section class="step" data-step="7" id="step-7" aria-label="Memory Photos">
       <div class="step-card text-center photos-step-card">
         <div class="badge-tag">
           <span>📸 PRECIOUS MEMORIES</span>
@@ -228,21 +278,21 @@
           
           <div class="photo-item-card">
             <div class="photo-frame">
-              <img id="galleryPhoto1" src="assets/photo1.jpg" alt="Memory Photo 1" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo1.png';">
+              <img id="galleryPhoto1" src="assets/photo1.jpg" alt="Special Memory - Photo 1" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo1.png';">
             </div>
             <p class="photo-tagline">Some moments are worth keeping. ✨</p>
           </div>
 
           <div class="photo-item-card">
             <div class="photo-frame">
-              <img id="galleryPhoto2" src="assets/photo2.jpg" alt="Memory Photo 2" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo2.png';">
+              <img id="galleryPhoto2" src="assets/photo2.jpg" alt="Beautiful Moment - Photo 2" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo2.png';">
             </div>
             <p class="photo-tagline">Random moments become favorites. 🌸</p>
           </div>
 
           <div class="photo-item-card">
             <div class="photo-frame">
-              <img id="galleryPhoto3" src="assets/photo3.jpg" alt="Memory Photo 3" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo3.png';">
+              <img id="galleryPhoto3" src="assets/photo3.jpg" alt="Final Memory - Photo 3" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo3.png';">
             </div>
             <p class="photo-tagline">One more memory to keep. 🤍</p>
           </div>
@@ -250,7 +300,7 @@
         </div>
 
         <div class="step-footer-actions">
-          <button class="next-btn pink-btn glow-btn" id="step6NextBtn">
+          <button class="next-btn pink-btn glow-btn" id="step7NextBtn">
             <span>CONTINUE →</span>
           </button>
         </div>
@@ -258,10 +308,10 @@
     </section>
 
     <!-- =======================================================================
-         STEP 7: 💌 SECRET LETTER
+         STEP 8: 💌 SECRET LETTER (CLEAN & RELIABLE NAVIGATION)
          ======================================================================= -->
-    <section class="step" data-step="7" id="step-7" aria-label="Secret Letter">
-      <div class="step-card text-center">
+    <section class="step" data-step="8" id="step-8" aria-label="Secret Letter">
+      <div class="step-card text-center letter-step-card">
         <div class="badge-tag">
           <span>💌 SPECIAL NOTE</span>
         </div>
@@ -305,23 +355,24 @@
         </div>
 
         <div id="letterInitialBtnWrap">
-          <button id="openLetterBtn" class="btn-action pink-btn">
+          <button id="openLetterBtn" class="btn-action pink-btn glow-btn">
             <span>OPEN LETTER 💌</span>
           </button>
         </div>
 
-        <div id="step7NextWrap" class="step-footer-actions hidden">
-          <button class="next-btn pink-btn glow-btn" id="step7NextBtn">
-            <span>CONTINUE →</span>
+        <!-- Clean prominent action button below letter -->
+        <div id="step8NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step8NextBtn">
+            <span>CONTINUE TO CAKE 🎂 →</span>
           </button>
         </div>
       </div>
     </section>
 
     <!-- =======================================================================
-         STEP 8: 🎂 CAKE CUTTING
+         STEP 9: 🎂 CAKE CUTTING MOMENT
          ======================================================================= -->
-    <section class="step" data-step="8" id="step-8" aria-label="Cake Cutting">
+    <section class="step" data-step="9" id="step-9" aria-label="Cake Cutting">
       <div class="step-card text-center cake-card">
         <div class="badge-tag">
           <span>🎂 CELEBRATION</span>
@@ -378,7 +429,7 @@
           </div>
         </div>
 
-        <!-- Step 8 Action Flow -->
+        <!-- Cake Action Flow -->
         <div class="cake-buttons-flow">
           <button id="btnMakeWish" class="btn-action pink-btn glow-btn">
             <span>MAKE A WISH ✨</span>
@@ -395,8 +446,8 @@
 
         <p id="cakeStatusText" class="status-note"></p>
 
-        <div id="step8NextWrap" class="step-footer-actions hidden">
-          <button class="next-btn pink-btn glow-btn" id="step8NextBtn">
+        <div id="step9NextWrap" class="step-footer-actions hidden">
+          <button class="next-btn pink-btn glow-btn" id="step9NextBtn">
             <span>CONTINUE →</span>
           </button>
         </div>
@@ -404,9 +455,9 @@
     </section>
 
     <!-- =======================================================================
-         STEP 9: 🎉 FINAL BIRTHDAY CELEBRATION
+         STEP 10: 🎉 FINAL BIRTHDAY CELEBRATION
          ======================================================================= -->
-    <section class="step" data-step="9" id="step-9" aria-label="Final Celebration">
+    <section class="step" data-step="10" id="step-10" aria-label="Final Celebration">
       <div class="step-card text-center finale-card">
         
         <div class="tribute-lines">
@@ -455,7 +506,7 @@
   <!-- Lightweight Canvas Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-  <!-- Core Script with 9-Step Navigation Engine -->
+  <!-- Core Script with Navigation Engine -->
   <script src="script.js"></script>
 </body>
 </html>

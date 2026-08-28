@@ -19,20 +19,23 @@ const CONFIG = {
     photo3: "assets/photo3.jpg"
   },
 
-  // Music File (Oorum Blood Unplugged)
+  // Music Configuration
   music: {
     title: "Oorum Blood Unplugged",
-    file: "assets/birthday-song.mp3"
+    artist: "Sai Abhyankkar & Paal Dabba (From 'Dude')",
+    file: "assets/birthday-song.mp3",
+    cover: "assets/photo2.jpg"
   }
 };
 
 /* ==========================================================================
-   CENTRALIZED 9-STEP NAVIGATION ENGINE
+   CENTRALIZED 10-STEP NAVIGATION ENGINE
    ========================================================================== */
 
 let currentStep = 1;
-const TOTAL_STEPS = 9;
+const TOTAL_STEPS = 10;
 let isMusicPlaying = false;
+let trackDuration = 80;
 let scratchCompleted = false;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,12 +43,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initBackgroundFloatingHearts();
   initStep1Password();
   initStep2Gift();
-  initStep3HeartGame();
-  initStep4ScratchCard();
-  initStep5MemoryGame();
-  initStep6to7Navigation();
-  initStep8CakeCutting();
-  initStep9Finale();
+  initStep3Music();
+  initStep4HeartGame();
+  initStep5ScratchCard();
+  initStep6MemoryGame();
+  initStep7Photos();
+  initStep8Letter();
+  initStep9CakeCutting();
+  initStep10Finale();
   initMusicFab();
 
   // Initialize Step 1
@@ -53,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* --------------------------------------------------------------------------
-   STEP CONTROLLER (ONE STEP AT A TIME)
+   STEP CONTROLLER (STRICTLY ONE STEP AT A TIME)
    -------------------------------------------------------------------------- */
 function showStep(stepNum) {
   if (stepNum < 1 || stepNum > TOTAL_STEPS) return;
@@ -74,8 +79,8 @@ function showStep(stepNum) {
     behavior: "smooth"
   });
 
-  // Step 9 Finale Trigger
-  if (currentStep === 9) {
+  // Step 10 Finale Trigger
+  if (currentStep === 10) {
     triggerFinaleSequence();
   }
 }
@@ -112,10 +117,18 @@ function injectConfig() {
   const p1 = document.getElementById("galleryPhoto1");
   const p2 = document.getElementById("galleryPhoto2");
   const p3 = document.getElementById("galleryPhoto3");
+  const musicCover = document.getElementById("musicCoverArt");
 
   if (p1 && CONFIG.photos.photo1) p1.src = CONFIG.photos.photo1;
   if (p2 && CONFIG.photos.photo2) p2.src = CONFIG.photos.photo2;
   if (p3 && CONFIG.photos.photo3) p3.src = CONFIG.photos.photo3;
+  if (musicCover && CONFIG.photos.photo2) musicCover.src = CONFIG.photos.photo2;
+
+  // Music Meta
+  const trackTitle = document.getElementById("musicTrackTitle");
+  const trackArtist = document.getElementById("musicTrackArtist");
+  if (trackTitle) trackTitle.textContent = CONFIG.music.title;
+  if (trackArtist) trackArtist.textContent = CONFIG.music.artist;
 
   // Recipient & Senders
   const recipient = document.getElementById("letterRecipientName");
@@ -156,14 +169,17 @@ function initMusicFab() {
       audio.play().then(() => {
         isMusicPlaying = true;
         fab.classList.add("playing");
+        updateMusicStepUI(true);
       }).catch(() => {
         isMusicPlaying = true;
         fab.classList.add("playing");
+        updateMusicStepUI(true);
       });
     } else {
       audio.pause();
       isMusicPlaying = false;
       fab.classList.remove("playing");
+      updateMusicStepUI(false);
     }
   }
 
@@ -177,7 +193,29 @@ function startAudioIfAvailable() {
     audio.play().then(() => {
       isMusicPlaying = true;
       if (fab) fab.classList.add("playing");
+      updateMusicStepUI(true);
     }).catch(() => {});
+  }
+}
+
+function updateMusicStepUI(playing) {
+  const playBtnText = document.getElementById("playSongBtnText");
+  const discWrap = document.getElementById("musicDiscWrap");
+  const waveAnim = document.getElementById("waveformAnim");
+  const fab = document.getElementById("musicFabBtn");
+
+  if (playBtnText) playBtnText.textContent = playing ? "⏸ PAUSE SONG" : "▶ PLAY THE SONG";
+  if (discWrap) {
+    if (playing) discWrap.classList.add("playing");
+    else discWrap.classList.remove("playing");
+  }
+  if (waveAnim) {
+    if (playing) waveAnim.classList.add("playing");
+    else waveAnim.classList.remove("playing");
+  }
+  if (fab) {
+    if (playing) fab.classList.add("playing");
+    else fab.classList.remove("playing");
   }
 }
 
@@ -222,7 +260,7 @@ function initStep1Password() {
 }
 
 /* --------------------------------------------------------------------------
-   STEP 2: 🎁 OPEN SURPRISE + MUSIC
+   STEP 2: 🎁 OPEN SURPRISE
    -------------------------------------------------------------------------- */
 function initStep2Gift() {
   const trigger = document.getElementById("giftBoxTrigger");
@@ -254,9 +292,78 @@ function initStep2Gift() {
 }
 
 /* --------------------------------------------------------------------------
-   STEP 3: ❤️ CATCH THE HEARTS GAME
+   STEP 3: 🎵 DEDICATED MUSIC STEP
    -------------------------------------------------------------------------- */
-function initStep3HeartGame() {
+function initStep3Music() {
+  const audio = document.getElementById("nativeAudio");
+  const playBtn = document.getElementById("playSongMainBtn");
+  const progressBar = document.getElementById("musicProgressBar");
+  const progressFill = document.getElementById("musicProgressFill");
+  const curTime = document.getElementById("musicCurrentTime");
+  const totTime = document.getElementById("musicTotalTime");
+  const nextBtn = document.getElementById("step3NextBtn");
+
+  if (audio) {
+    audio.addEventListener("loadedmetadata", () => {
+      if (!isNaN(audio.duration) && audio.duration > 0) {
+        trackDuration = Math.floor(audio.duration);
+        if (totTime) {
+          const m = Math.floor(trackDuration / 60);
+          const s = (trackDuration % 60).toString().padStart(2, "0");
+          totTime.textContent = `${m}:${s}`;
+        }
+      }
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (!isNaN(audio.currentTime)) {
+        if (progressFill) {
+          const pct = Math.min(100, Math.max(0, (audio.currentTime / trackDuration) * 100));
+          progressFill.style.width = `${pct}%`;
+        }
+        if (curTime) {
+          const m = Math.floor(audio.currentTime / 60);
+          const s = Math.floor(audio.currentTime % 60).toString().padStart(2, "0");
+          curTime.textContent = `${m}:${s}`;
+        }
+      }
+    });
+  }
+
+  function togglePlay() {
+    if (!audio) return;
+    if (audio.paused) {
+      audio.play().then(() => {
+        isMusicPlaying = true;
+        updateMusicStepUI(true);
+      }).catch(() => {
+        isMusicPlaying = true;
+        updateMusicStepUI(true);
+      });
+    } else {
+      audio.pause();
+      isMusicPlaying = false;
+      updateMusicStepUI(false);
+    }
+  }
+
+  if (playBtn) playBtn.addEventListener("click", togglePlay);
+
+  if (progressBar) {
+    progressBar.addEventListener("click", (e) => {
+      const rect = progressBar.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (audio && !isNaN(audio.duration)) audio.currentTime = ratio * trackDuration;
+    });
+  }
+
+  if (nextBtn) nextBtn.addEventListener("click", nextStep);
+}
+
+/* --------------------------------------------------------------------------
+   STEP 4: ❤️ CATCH THE HEARTS GAME
+   -------------------------------------------------------------------------- */
+function initStep4HeartGame() {
   const startBtn = document.getElementById("startHeartBtn");
   const arena = document.getElementById("heartGameArena");
   const scoreVal = document.getElementById("heartScoreVal");
@@ -266,8 +373,8 @@ function initStep3HeartGame() {
   const resultHeader = document.getElementById("heartResultHeader");
   const resultDesc = document.getElementById("heartResultDesc");
   const retryBtn = document.getElementById("heartRetryBtn");
-  const nextWrap = document.getElementById("step3NextWrap");
-  const nextBtn = document.getElementById("step3NextBtn");
+  const nextWrap = document.getElementById("step4NextWrap");
+  const nextBtn = document.getElementById("step4NextBtn");
 
   let score = 0;
   let timeLeft = 20;
@@ -360,15 +467,15 @@ function initStep3HeartGame() {
 }
 
 /* --------------------------------------------------------------------------
-   STEP 4: 🃏 SCRATCH CARD
+   STEP 5: 🃏 SCRATCH CARD
    -------------------------------------------------------------------------- */
-function initStep4ScratchCard() {
+function initStep5ScratchCard() {
   const canvas = document.getElementById("scratchCanvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
   const pctLabel = document.getElementById("scratchPctLabel");
-  const nextWrap = document.getElementById("step4NextWrap");
-  const nextBtn = document.getElementById("step4NextBtn");
+  const nextWrap = document.getElementById("step5NextWrap");
+  const nextBtn = document.getElementById("step5NextBtn");
 
   let isScratching = false;
   let lastX = 0;
@@ -481,14 +588,14 @@ function initStep4ScratchCard() {
 }
 
 /* --------------------------------------------------------------------------
-   STEP 5: 🧩 MEMORY MATCH GAME
+   STEP 6: 🧩 MEMORY MATCH GAME
    -------------------------------------------------------------------------- */
-function initStep5MemoryGame() {
+function initStep6MemoryGame() {
   const grid = document.getElementById("memoryCardsGrid");
   const movesLabel = document.getElementById("memoryMovesLabel");
   const successMsg = document.getElementById("memorySuccessMsg");
-  const nextWrap = document.getElementById("step5NextWrap");
-  const nextBtn = document.getElementById("step5NextBtn");
+  const nextWrap = document.getElementById("step6NextWrap");
+  const nextBtn = document.getElementById("step6NextBtn");
 
   const icons = ["🌸", "🌸", "🎂", "🎂", "✨", "✨"];
   icons.sort(() => Math.random() - 0.5);
@@ -550,36 +657,39 @@ function initStep5MemoryGame() {
 }
 
 /* --------------------------------------------------------------------------
-   STEP 6 & 7: 📸 PHOTOS & 💌 LETTER NAVIGATION
+   STEP 7: 📸 MEMORY PHOTOS
    -------------------------------------------------------------------------- */
-function initStep6to7Navigation() {
-  // Step 6 Photos Next Button
-  const step6Btn = document.getElementById("step6NextBtn");
-  if (step6Btn) step6Btn.addEventListener("click", nextStep);
+function initStep7Photos() {
+  const step7Btn = document.getElementById("step7NextBtn");
+  if (step7Btn) step7Btn.addEventListener("click", nextStep);
+}
 
-  // Step 7 Letter
+/* --------------------------------------------------------------------------
+   STEP 8: 💌 SECRET LETTER (CLEAN & RELIABLE NAVIGATION)
+   -------------------------------------------------------------------------- */
+function initStep8Letter() {
   const openLetterBtn = document.getElementById("openLetterBtn");
   const envWrap = document.getElementById("letterEnvelopeWrap");
   const letterInitialWrap = document.getElementById("letterInitialBtnWrap");
-  const step7NextWrap = document.getElementById("step7NextWrap");
-  const step7Btn = document.getElementById("step7NextBtn");
+  const step8NextWrap = document.getElementById("step8NextWrap");
+  const step8Btn = document.getElementById("step8NextBtn");
 
   function openLetter() {
     if (envWrap) envWrap.classList.add("opened");
     if (letterInitialWrap) letterInitialWrap.classList.add("hidden");
-    if (step7NextWrap) step7NextWrap.classList.remove("hidden");
+    if (step8NextWrap) step8NextWrap.classList.remove("hidden");
     triggerConfetti();
   }
 
   if (openLetterBtn) openLetterBtn.addEventListener("click", openLetter);
   if (envWrap) envWrap.addEventListener("click", openLetter);
-  if (step7Btn) step7Btn.addEventListener("click", nextStep);
+  if (step8Btn) step8Btn.addEventListener("click", nextStep);
 }
 
 /* --------------------------------------------------------------------------
-   STEP 8: 🎂 CAKE CUTTING MOMENT
+   STEP 9: 🎂 CAKE CUTTING MOMENT
    -------------------------------------------------------------------------- */
-function initStep8CakeCutting() {
+function initStep9CakeCutting() {
   const btnMakeWish = document.getElementById("btnMakeWish");
   const btnBlowCandles = document.getElementById("btnBlowCandles");
   const btnCutCake = document.getElementById("btnCutCake");
@@ -590,8 +700,8 @@ function initStep8CakeCutting() {
   const cutLine = document.getElementById("cakeCutLine");
   const frontSlice = document.getElementById("cakeFrontSlice");
   const hiddenNote = document.getElementById("cakeHiddenNote");
-  const step8NextWrap = document.getElementById("step8NextWrap");
-  const step8Btn = document.getElementById("step8NextBtn");
+  const step9NextWrap = document.getElementById("step9NextWrap");
+  const step9Btn = document.getElementById("step9NextBtn");
 
   const flames = document.querySelectorAll("#candlesRow .candle-flame");
   const smokes = document.querySelectorAll("#candlesRow .smoke-fx");
@@ -655,19 +765,19 @@ function initStep8CakeCutting() {
         if (cakeStatus) cakeStatus.textContent = "CAKE CUT! 🎂✨";
 
         setTimeout(() => {
-          if (step8NextWrap) step8NextWrap.classList.remove("hidden");
+          if (step9NextWrap) step9NextWrap.classList.remove("hidden");
         }, 1200);
       }, 1200);
     });
   }
 
-  if (step8Btn) step8Btn.addEventListener("click", nextStep);
+  if (step9Btn) step9Btn.addEventListener("click", nextStep);
 }
 
 /* --------------------------------------------------------------------------
-   STEP 9: 🎉 FINALE & CELEBRATION
+   STEP 10: 🎉 FINALE & CELEBRATION
    -------------------------------------------------------------------------- */
-function initStep9Finale() {
+function initStep10Finale() {
   const enjoyBtn = document.getElementById("enjoyMomentBtn");
   if (enjoyBtn) {
     enjoyBtn.addEventListener("click", () => {
@@ -750,9 +860,9 @@ function createBgHeart(container, icons, isInitial) {
   heart.className = "bg-heart";
   heart.textContent = icons[Math.floor(Math.random() * icons.length)];
 
-  const leftPos = Math.random() * 96; // 0% to 96%
-  const animDuration = Math.random() * 8 + 9; // 9s to 17s
-  const size = (Math.random() * 0.7 + 0.8).toFixed(2); // 0.8rem to 1.5rem
+  const leftPos = Math.random() * 96;
+  const animDuration = Math.random() * 8 + 9;
+  const size = (Math.random() * 0.7 + 0.8).toFixed(2);
   const delay = isInitial ? -(Math.random() * animDuration) : 0;
 
   heart.style.left = `${leftPos}%`;
@@ -768,4 +878,3 @@ function createBgHeart(container, icons, isInitial) {
     }
   }, (animDuration + Math.abs(delay)) * 1000);
 }
-

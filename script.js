@@ -10,7 +10,7 @@ const CONFIG = {
   password: "Swathi",
 
   // Sender's Name / Signature
-  senderName: "Your Best Friend",
+  senderName: "Your Fav Person",
 
   // EXACTLY 3 Personal Photos (No other images used)
   photos: {

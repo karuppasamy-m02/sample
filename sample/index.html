@@ -263,7 +263,7 @@
     </section>
 
     <!-- =======================================================================
-         STEP 7: 📸 MEMORY PHOTOS (EXACTLY 3 PHOTOS)
+         STEP 7: 📸 MEMORY PHOTOS (INTERACTIVE 3-PHOTO SLIDESHOW)
          ======================================================================= -->
     <section class="step" data-step="7" id="step-7" aria-label="Memory Photos">
       <div class="step-card text-center photos-step-card">
@@ -271,32 +271,46 @@
           <span>📸 PRECIOUS MEMORIES</span>
         </div>
         <h1 class="step-heading">Little Moments</h1>
-        <p class="step-subheading">Some memories are forever worth keeping.</p>
+        <p class="step-subheading">Swipe or tap arrows to view your memories.</p>
 
-        <!-- 3 Photos Gallery: Mobile swipe/carousel & Desktop 3-cards row -->
-        <div class="gallery-wrapper" id="photosGallery">
+        <!-- 3-Photo Interactive Carousel Slider -->
+        <div class="photo-slider-container" id="photoSliderContainer">
+          <button class="slider-arrow prev-arrow" id="sliderPrevBtn" aria-label="Previous Photo">‹</button>
           
-          <div class="photo-item-card">
-            <div class="photo-frame">
-              <img id="galleryPhoto1" src="assets/photo1.jpg" alt="Special Memory - Photo 1" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo1.png';">
+          <div class="photo-slider-track" id="photoSliderTrack">
+            <!-- Slide 1 -->
+            <div class="photo-slide active" data-slide="0">
+              <div class="slide-frame">
+                <img id="galleryPhoto1" src="assets/photo1.jpg" alt="Special Memory 1" class="slide-img" onerror="this.onerror=null; this.src='assets/photo1.png';">
+              </div>
+              <p class="photo-tagline">Some moments are worth keeping. ✨</p>
             </div>
-            <p class="photo-tagline">Some moments are worth keeping. ✨</p>
+
+            <!-- Slide 2 -->
+            <div class="photo-slide" data-slide="1">
+              <div class="slide-frame">
+                <img id="galleryPhoto2" src="assets/photo2.jpg" alt="Special Memory 2" class="slide-img" onerror="this.onerror=null; this.src='assets/photo2.png';">
+              </div>
+              <p class="photo-tagline">Random moments become favorites. 🌸</p>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="photo-slide" data-slide="2">
+              <div class="slide-frame">
+                <img id="galleryPhoto3" src="assets/photo3.jpg" alt="Special Memory 3" class="slide-img" onerror="this.onerror=null; this.src='assets/photo3.png';">
+              </div>
+              <p class="photo-tagline">One more memory to keep. 🤍</p>
+            </div>
           </div>
 
-          <div class="photo-item-card">
-            <div class="photo-frame">
-              <img id="galleryPhoto2" src="assets/photo2.jpg" alt="Beautiful Moment - Photo 2" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo2.png';">
-            </div>
-            <p class="photo-tagline">Random moments become favorites. 🌸</p>
-          </div>
+          <button class="slider-arrow next-arrow" id="sliderNextBtn" aria-label="Next Photo">›</button>
+        </div>
 
-          <div class="photo-item-card">
-            <div class="photo-frame">
-              <img id="galleryPhoto3" src="assets/photo3.jpg" alt="Final Memory - Photo 3" class="gallery-img" onerror="this.onerror=null; this.src='assets/photo3.png';">
-            </div>
-            <p class="photo-tagline">One more memory to keep. 🤍</p>
-          </div>
-
+        <!-- Slider Dots & Counter -->
+        <div class="slider-pagination" id="sliderPagination">
+          <span class="slide-dot active" data-index="0"></span>
+          <span class="slide-dot" data-index="1"></span>
+          <span class="slide-dot" data-index="2"></span>
         </div>
 
         <div class="step-footer-actions">
@@ -318,12 +332,24 @@
         <h1 class="step-heading">A Letter For You</h1>
         <p class="step-subheading">A handwritten note from your best friend.</p>
 
-        <div class="envelope-3d-wrap" id="letterEnvelopeWrap">
-          <div class="env-back"></div>
+        <div class="letter-interaction-zone">
+          <!-- 3D Envelope -->
+          <div class="envelope-3d-wrap" id="letterEnvelopeWrap" role="button" tabindex="0" aria-label="Tap to open envelope">
+            <div class="env-back"></div>
 
-          <!-- Letter Card -->
-          <div class="env-sheet" id="envSheetCard">
-            <div class="env-sheet-inner">
+            <div class="env-front">
+              <div class="env-t-left"></div>
+              <div class="env-t-right"></div>
+              <div class="env-t-bottom"></div>
+              <div class="env-t-flap" id="envTopFlap">
+                <div class="env-seal">🤍</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Unfolded Letter Paper Sheet -->
+          <div class="unfolded-letter-card hidden" id="unfoldedLetterCard">
+            <div class="letter-inner-content">
               <p class="sheet-greet">Hey <span id="letterRecipientName">Swathi</span>,</p>
               <p class="sheet-p">Birthdays come every year, but some people make certain years a little more memorable.</p>
               <p class="sheet-p">Thank you for all the laughs, random conversations, silly moments, and memories.</p>
@@ -343,15 +369,6 @@
               <p class="sheet-sign" id="letterSignName">— Your Best Friend</p>
             </div>
           </div>
-
-          <div class="env-front">
-            <div class="env-t-left"></div>
-            <div class="env-t-right"></div>
-            <div class="env-t-bottom"></div>
-            <div class="env-t-flap" id="envTopFlap">
-              <div class="env-seal">🤍</div>
-            </div>
-          </div>
         </div>
 
         <div id="letterInitialBtnWrap">
@@ -360,7 +377,7 @@
           </button>
         </div>
 
-        <!-- Clean prominent action button below letter -->
+        <!-- Clean prominent action button below letter (Always unblocked) -->
         <div id="step8NextWrap" class="step-footer-actions hidden">
           <button class="next-btn pink-btn glow-btn" id="step8NextBtn">
             <span>CONTINUE TO CAKE 🎂 →</span>

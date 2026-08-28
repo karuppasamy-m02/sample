@@ -657,10 +657,77 @@ function initStep6MemoryGame() {
 }
 
 /* --------------------------------------------------------------------------
-   STEP 7: 📸 MEMORY PHOTOS
+   STEP 7: 📸 MEMORY PHOTOS (3-PHOTO INTERACTIVE SLIDESHOW)
    -------------------------------------------------------------------------- */
 function initStep7Photos() {
+  const slides = document.querySelectorAll("#photoSliderTrack .photo-slide");
+  const dots = document.querySelectorAll("#sliderPagination .slide-dot");
+  const prevBtn = document.getElementById("sliderPrevBtn");
+  const nextBtn = document.getElementById("sliderNextBtn");
   const step7Btn = document.getElementById("step7NextBtn");
+  const container = document.getElementById("photoSliderContainer");
+
+  let currentSlide = 0;
+  const totalSlides = slides.length || 3;
+
+  function showSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+
+    currentSlide = index;
+
+    slides.forEach((s, idx) => {
+      if (idx === currentSlide) {
+        s.classList.add("active");
+      } else {
+        s.classList.remove("active");
+      }
+    });
+
+    dots.forEach((d, idx) => {
+      if (idx === currentSlide) {
+        d.classList.add("active");
+      } else {
+        d.classList.remove("active");
+      }
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => showSlide(currentSlide - 1));
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => showSlide(currentSlide + 1));
+  }
+
+  dots.forEach((d) => {
+    d.addEventListener("click", () => {
+      const idx = parseInt(d.dataset.index, 10);
+      if (!isNaN(idx)) showSlide(idx);
+    });
+  });
+
+  // Mobile Touch Swipe
+  if (container) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    container.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    container.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 40) {
+        showSlide(currentSlide + 1); // Swipe left -> next
+      }
+      if (touchEndX > touchStartX + 40) {
+        showSlide(currentSlide - 1); // Swipe right -> prev
+      }
+    }, { passive: true });
+  }
+
   if (step7Btn) step7Btn.addEventListener("click", nextStep);
 }
 
@@ -670,12 +737,14 @@ function initStep7Photos() {
 function initStep8Letter() {
   const openLetterBtn = document.getElementById("openLetterBtn");
   const envWrap = document.getElementById("letterEnvelopeWrap");
+  const unfoldedCard = document.getElementById("unfoldedLetterCard");
   const letterInitialWrap = document.getElementById("letterInitialBtnWrap");
   const step8NextWrap = document.getElementById("step8NextWrap");
   const step8Btn = document.getElementById("step8NextBtn");
 
   function openLetter() {
-    if (envWrap) envWrap.classList.add("opened");
+    if (envWrap) envWrap.classList.add("hidden");
+    if (unfoldedCard) unfoldedCard.classList.remove("hidden");
     if (letterInitialWrap) letterInitialWrap.classList.add("hidden");
     if (step8NextWrap) step8NextWrap.classList.remove("hidden");
     triggerConfetti();

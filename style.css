@@ -876,38 +876,63 @@ input {
 /* --------------------------------------------------------------------------
    12. STEP 6: 📸 MEMORY PHOTOS (EXACTLY 3 PHOTOS)
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   12. STEP 7: 📸 MEMORY PHOTOS (3-PHOTO INTERACTIVE SLIDESHOW)
+   -------------------------------------------------------------------------- */
 .photos-step-card {
   padding: 28px 16px;
 }
 
-.gallery-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.photo-slider-container {
+  position: relative;
   width: 100%;
   max-width: 320px;
-  margin: 0 auto;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.photo-item-card {
+.photo-slider-track {
   width: 100%;
-  background: var(--white);
+  max-width: 270px;
+  position: relative;
+  min-height: 340px;
+}
+
+.photo-slide {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.photo-slide.active {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+  animation: slideFade 0.45s ease forwards;
+}
+
+@keyframes slideFade {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.slide-frame {
+  width: 100%;
+  height: 290px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 79, 154, 0.15);
-  box-shadow: 0 4px 14px rgba(128, 109, 125, 0.08);
-  padding: 10px;
-  overflow: hidden;
-}
-
-.photo-frame {
-  width: 100%;
-  height: 220px;
-  border-radius: 14px;
   overflow: hidden;
   background: var(--light-pink);
+  border: 3px solid var(--white);
+  box-shadow: 0 10px 25px rgba(255, 79, 154, 0.22);
 }
 
-.gallery-img {
+.slide-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -916,29 +941,91 @@ input {
 
 .photo-tagline {
   font-family: var(--font-script);
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--pink);
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
+/* Slider Arrow Buttons */
+.slider-arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--pink);
+  font-size: 1.6rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(128, 109, 125, 0.15);
+  border: 1px solid rgba(255, 79, 154, 0.2);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.slider-arrow:hover {
+  background: var(--pink);
+  color: #fff;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.prev-arrow { left: -10px; }
+.next-arrow { right: -10px; }
+
+/* Pagination Dots */
+.slider-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.slide-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 79, 154, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slide-dot.active {
+  width: 22px;
+  border-radius: 10px;
+  background: var(--pink);
+}
+
+/* --------------------------------------------------------------------------
+   13. STEP 8: SECRET LETTER (CLEAN & RELIABLE NAVIGATION)
+   -------------------------------------------------------------------------- */
 .letter-step-card {
   padding: 30px 18px 26px;
 }
 
-.letter-step-card .step-footer-actions {
-  margin-top: 26px;
-  position: relative;
-  z-index: 30;
+.letter-interaction-zone {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
 }
 
 .envelope-3d-wrap {
   position: relative;
-  width: 280px;
-  height: 180px;
+  width: 270px;
+  height: 175px;
   margin: 10px auto 14px;
   perspective: 800px;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.envelope-3d-wrap:hover {
+  transform: scale(1.03);
 }
 
 .env-back {
@@ -950,41 +1037,33 @@ input {
   border: 1px solid rgba(255, 79, 154, 0.2);
 }
 
-.env-sheet {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 264px;
-  min-height: 164px;
-  max-height: 164px;
+.unfolded-letter-card {
+  width: 100%;
   background: #ffffff;
-  border-radius: 12px;
-  padding: 16px 14px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-  z-index: 2;
-  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), max-height 0.8s ease, z-index 0.3s ease;
-  overflow: hidden;
-  border: 1px solid #f2e2ea;
+  border-radius: 16px;
+  padding: 18px 16px;
+  box-shadow: 0 8px 24px rgba(128, 109, 125, 0.1);
+  border: 1px solid rgba(255, 79, 154, 0.2);
   text-align: left;
-}
-
-.envelope-3d-wrap.opened .env-sheet {
-  transform: translateY(-110px);
-  max-height: 420px;
-  z-index: 10;
-  box-shadow: 0 14px 35px rgba(128, 109, 125, 0.2);
+  max-height: 270px;
   overflow-y: auto;
+  animation: letterCardReveal 0.6s var(--ease-spring) forwards;
 }
 
-.env-sheet-inner {
-  font-size: 0.84rem;
-  line-height: 1.5;
+@keyframes letterCardReveal {
+  from { opacity: 0; transform: translateY(15px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.letter-inner-content {
+  font-size: 0.86rem;
+  line-height: 1.55;
   color: #3b2d3d;
 }
 
 .sheet-greet {
   font-family: var(--font-script);
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--pink);
   margin-bottom: 4px;
@@ -996,7 +1075,7 @@ input {
 
 .sheet-quote {
   font-family: var(--font-script);
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   font-weight: 600;
   color: #c72970;
   border-left: 3px solid var(--pink);
@@ -1007,12 +1086,12 @@ input {
 
 .sheet-oath {
   margin-top: 8px;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 
 .sheet-sign {
   font-family: var(--font-script);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--muted);
   margin-top: 8px;
@@ -1032,7 +1111,7 @@ input {
   left: 0;
   bottom: 0;
   border-style: solid;
-  border-width: 90px 0 90px 140px;
+  border-width: 88px 0 88px 135px;
   border-color: transparent transparent transparent #f5d4e2;
   border-radius: 16px 0 0 16px;
 }
@@ -1042,7 +1121,7 @@ input {
   right: 0;
   bottom: 0;
   border-style: solid;
-  border-width: 90px 140px 90px 0;
+  border-width: 88px 135px 88px 0;
   border-color: transparent #fad8e6 transparent transparent;
   border-radius: 0 16px 16px 0;
 }
@@ -1052,7 +1131,7 @@ input {
   left: 0;
   bottom: 0;
   border-style: solid;
-  border-width: 0 140px 100px 140px;
+  border-width: 0 135px 95px 135px;
   border-color: transparent transparent #ffdbe9 transparent;
   border-radius: 0 0 16px 16px;
 }
@@ -1062,7 +1141,7 @@ input {
   top: 0;
   left: 0;
   border-style: solid;
-  border-width: 105px 140px 0 140px;
+  border-width: 100px 135px 0 135px;
   border-color: #ffd1e4 transparent transparent transparent;
   border-radius: 16px 16px 0 0;
   transform-origin: top center;
@@ -1077,7 +1156,7 @@ input {
 
 .env-seal {
   position: absolute;
-  top: -100px;
+  top: -95px;
   left: -16px;
   width: 32px;
   height: 32px;
